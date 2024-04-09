@@ -2,6 +2,8 @@
 
 Browse the web together with your friends on Discord powered by the [Embedded App SDK](https://github.com/discord/embedded-app-sdk).
 
+![Example Image](./example.png)
+
 ## Progress
 
 - [x] Shared browser instances
