@@ -1,30 +1,51 @@
-# React + TypeScript + Vite
+# Browse Together
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Browse the web together with your friends on Discord powered by the [Embedded App SDK](https://github.com/discord/embedded-app-sdk).
 
-Currently, two official plugins are available:
+## Progress
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [x] Shared browser instances
+- [x] Stream browser with static frame rate
+- [x] Support for mouse and keyboard
+- [x] URL navigation
+- [ ] Adaptive frame rate based on content
+- [ ] Stop browser from randomly crashing
 
-## Expanding the ESLint configuration
+## Local Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Run Server
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```shell
+cd server
+yarn
+npx @puppeteer/browsers install chrome@stable
+yarn dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Run Client
+
+```shell
+cd client
+yarn
+yarn dev
+```
+
+### Expose to the internet
+
+Discord must be able to connect to our server and client over HTTPS. For this we expose both services using the [Cloudflare Tunnel Client](https://github.com/cloudflare/cloudflared). You don't need a Cloudflare account for this.
+
+Cloudflare will give you a random unique URL for each service.
+
+```shell
+# For the client
+cloudflared tunnel --url http://localhost:3000
+
+# For the server
+cloudflared tunnel --url http://localhost:8080
+```
+
+### Configure Discord App
+
+Go to the [Discord Developer Portal](https://discor.dev) and select your app. Go to "Activities", enable it, and then go to "URL Mappings".
+
+Here enter the URL Cloudflare has given you for the client as the "Root Mapping" and the URL Cloudflare has given you for the server with the prefix "/ws".
