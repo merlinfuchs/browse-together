@@ -18,6 +18,9 @@ Browse the web together with your friends on Discord powered by the [Embedded Ap
 ### Run Server
 
 ```shell
+export DISCORD_CLIENT_ID=<your_client_id>
+export DISCORD_CLIENT_SECRET=<your_client_secret>
+
 cd server
 yarn
 npx @puppeteer/browsers install chrome@stable
@@ -27,6 +30,9 @@ yarn dev
 ### Run Client
 
 ```shell
+export VITE_DISCORD_CLIENT_ID=<your_client_id>
+export VITE_WS_URL=wss://<your_client_id>.discordsays.com/ws
+
 cd client
 yarn
 yarn dev
